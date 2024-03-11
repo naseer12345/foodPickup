@@ -1,35 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { GoogleMap, LoadScript, MarkerF, Polygon  } from '@react-google-maps/api';
+import { useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const mapContainerStyle = {
+    height: '400px',
+    width: '800px',
+  };
+
+  function MarkerObj(lat, long, food) {
+    this.lat = lat;
+    this.long = long;
+    this.food = food;
+
+    this.listFood = function() {
+        console.log(this.food);
+    }
+
+    this.test = function() {
+        console.log("added to dom");
+    }
+}
+    
+  const handleLoad = () => {
+    setIsLoaded(true);
+  };
+  const coordinates = [
+    { lat: 37.7749, lng: -122.4194 },
+    { lat: 37.7749, lng: -122.4184 },
+    { lat: 37.7759, lng: -122.4184 },
+    { lat: 37.7759, lng: -122.4194 },
+  ];
+
+  const center = {
+    lat: 37.7749,
+    lng: -120,
+  };
+
+  const position = {
+    lat: 37.7749,
+    lng: -120,
+  };
+  const position2 = new MarkerObj(37.7750,-120, "pasta") 
+  const position3 = {
+    lat: 37.7751,
+    lng: -120,
+  };
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <LoadScript
+    version='alplha'
+      googleMapsApiKey="AIzaSyBm-UxwUQrC7ProtlcuSVtIN67fXm0NzU0"
+      onLoad={handleLoad}
+    >
+      {isLoaded ? (
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+           
+          zoom={13}
+          center={center}
+        >
+          <Polygon paths={[coordinates]} />
+          <MarkerF  position={position} onClick={() => console.log('Marker clicked!')} />
+          <MarkerF  position={position2.lat,position2.log} onClick={() => console.log('Marker clicked!')} />
 
-export default App
+          <MarkerF  position={position3} onClick={() => console.log('Marker clicked!')} />
+
+        </GoogleMap>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </LoadScript>
+  );
+};
+
+export default App;
