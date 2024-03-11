@@ -167,7 +167,7 @@ const mapStyles = {
 // i need a button that will make us upload food or donate food . donate with current location.
 // once accepted, all the other food marks should disapear and only show destination to the accepted food place.
 // or you can direct to new page with only map and and food pick location.
-import { GoogleMap, LoadScript, MarkerF } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, MarkerF, DirectionsService, DirectionsRenderer  } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import {
@@ -193,6 +193,24 @@ const Map = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPosition, setCurrentPosition] = useState(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false); // State variable to control sheet visibility
+
+// code for direction : 
+const [directions, setDirections] = useState(null);
+
+  const origin = { lat: 39.7749, lng: -120 }; // Origin coordinates
+  const destination = { lat: 37.7751, lng: -120 }; // Destination coordinates
+
+  const directionsOptions = {
+    destination: destination,
+    origin: origin,
+    travelMode: 'DRIVING', // Specify the travel mode (DRIVING, WALKING, BICYCLING, TRANSIT)
+  };
+
+  const onLoadDirections = (directionsResult) => {
+    setDirections(directionsResult);
+  };
+  // end of code for direction
+
 
   const mapContainerStyle = {
     height: '100vh',
@@ -245,6 +263,11 @@ const Map = () => {
               styles: mapStyles.darkMode,
             }}
           >
+             {directions && <DirectionsRenderer directions={directions} />}
+        <DirectionsService
+          options={directionsOptions}
+          callback={onLoadDirections}
+        />
             {currentPosition && (
               <MarkerF
                 position={currentPosition}
