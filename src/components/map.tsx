@@ -190,7 +190,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
   } from "@/components/ui/drawer"
-import { DialogDemo } from './donateFoodDialog';
+import { DialogToAddFood } from './donateFoodDialog';
 
 const Map = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -239,7 +239,7 @@ const Map = () => {
   return (
     <div style={{ display: 'flex', flexDirection:'column' , justifyContent: 'center'}}>
       
-      <DialogDemo />
+      <DialogToAddFood />
       <LoadScript
         googleMapsApiKey="AIzaSyBm-UxwUQrC7ProtlcuSVtIN67fXm0NzU0"
         onLoad={handleLoad}
@@ -250,7 +250,7 @@ const Map = () => {
             zoom={13}
             center={currentPosition || center}
             options={{
-              disableDefaultUI: false,
+              disableDefaultUI: true,
               styles: mapStyles.darkMode,
             }}
           >
@@ -258,7 +258,8 @@ const Map = () => {
             {currentPosition && (
               <MarkerF
                 position={currentPosition}
-                onClick={toggleSheet} // Call toggleSheet function when marker is clicked
+                onClick={toggleSheet} 
+                label={"current position"}
               />
             )}
           </GoogleMap>
