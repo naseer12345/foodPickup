@@ -1,5 +1,5 @@
-import React from 'react'
-import { GoogleMap, LoadScript, MarkerF, DirectionsService, DirectionsRenderer  } from '@react-google-maps/api';
+import React from 'react';
+import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer  } from '@react-google-maps/api';
 import { useState } from 'react';
 const mapStyles = {
     darkMode: [
@@ -169,14 +169,14 @@ const mapStyles = {
     width: '100vw',
   };
 
-export default function Direction(origin, destination ){
+export default function Direction( ){
 const [directions, setDirections] = useState(null);
 
 
   const directionsOptions = {
-    destination: destination,
-    origin: origin,
-    travelMode: 'DRIVING', // Specify the travel mode (DRIVING, WALKING, BICYCLING, TRANSIT)
+    destination: {lat: 51.648388, lng: -0.2612529},
+    origin: {lat: 51.6129827, lng: -0.3106275},
+    travelMode: 'TRANSIT', // Specify the travel mode (DRIVING, WALKING, BICYCLING, TRANSIT)
   };
 
   const onLoadDirections = (directionsResult) => {
@@ -191,8 +191,8 @@ const [directions, setDirections] = useState(null);
         
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
-            zoom={13}
-            center={origin}
+            zoom={15}
+            center={51.6129827}
             options={{
               disableDefaultUI: false,
               styles: mapStyles.darkMode,

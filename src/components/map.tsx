@@ -167,8 +167,10 @@ const mapStyles = {
 // i need a button that will make us upload food or donate food . donate with current location.
 // once accepted, all the other food marks should disapear and only show destination to the accepted food place.
 // or you can direct to new page with only map and and food pick location.
-import { GoogleMap, LoadScript, MarkerF, DirectionsService, DirectionsRenderer  } from '@react-google-maps/api';
-import { useState, useEffect } from 'react';
+import { GoogleMap, LoadScript, MarkerF } from '@react-google-maps/api';
+import  React,{ useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Button } from './ui/button';
 import {
     Sheet,
@@ -193,6 +195,7 @@ const Map = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPosition, setCurrentPosition] = useState(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false); // State variable to control sheet visibility
+  const navigateToDirectionPage = useNavigate();
 
 
 
@@ -273,11 +276,10 @@ const Map = () => {
             </SheetDescription>
           </SheetHeader>
           <Button onClick={toggleSheet}>Close</Button>  
-
           {/* drawer for direction starts from here  */}
           <Drawer>
       <DrawerTrigger asChild>
-        <Button variant="outline"  >Accept donation</Button>
+        <Button variant="outline" >Accept donation</Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
@@ -292,7 +294,7 @@ const Map = () => {
            
           </div>
           <DrawerFooter>
-            <Button>Pickup the food</Button>
+            <Button onClick={() => navigateToDirectionPage('/direction')} >Pickup the food</Button>
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>
@@ -303,6 +305,7 @@ const Map = () => {
         </SheetContent>
         
       </Sheet>
+
       
       
     </div>
