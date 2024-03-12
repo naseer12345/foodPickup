@@ -194,22 +194,7 @@ const Map = () => {
   const [currentPosition, setCurrentPosition] = useState(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false); // State variable to control sheet visibility
 
-// code for direction : 
-const [directions, setDirections] = useState(null);
 
-  const origin = { lat: 39.7749, lng: -120 }; // Origin coordinates
-  const destination = { lat: 37.7751, lng: -120 }; // Destination coordinates
-
-  const directionsOptions = {
-    destination: destination,
-    origin: origin,
-    travelMode: 'DRIVING', // Specify the travel mode (DRIVING, WALKING, BICYCLING, TRANSIT)
-  };
-
-  const onLoadDirections = (directionsResult) => {
-    setDirections(directionsResult);
-  };
-  // end of code for direction
 
 
   const mapContainerStyle = {
@@ -263,11 +248,7 @@ const [directions, setDirections] = useState(null);
               styles: mapStyles.darkMode,
             }}
           >
-             {directions && <DirectionsRenderer directions={directions} />}
-        <DirectionsService
-          options={directionsOptions}
-          callback={onLoadDirections}
-        />
+      
             {currentPosition && (
               <MarkerF
                 position={currentPosition}
