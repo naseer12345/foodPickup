@@ -29,6 +29,7 @@ export function DialogToAddFood() {
     } catch (error) {
       console.error('Error:', error);
     }
+    
   };
 
   return (
@@ -46,20 +47,30 @@ export function DialogToAddFood() {
       <form onSubmit={handleSubmit}>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
+            <Label htmlFor="foodname" className="text-right">
               Food Name
             </Label>
-            <Input id="name" className="col-span-3" onChange={(e)=>{setFoodName(e.target.value)}} />
+            <Input id="foodname" className="col-span-3" onChange={(e)=>{setFoodName(e.target.value)}} />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
+            <Label htmlFor="amountofpeople" className="text-right">
               Amount of people it can feed?
             </Label>
-            <Input id="username" className="col-span-3" onChange={(e)=>{setFeedablePple(e.target.value)}} />
+            <Input id="amoutofpeople" type="number" className="col-span-3" onChange={(e)=>{setFeedablePple(e.target.value)}} />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" >Add food</Button>
+          <Button type="submit" onClick={()=>{
+      const foodNameInput = document.getElementById("foodname");
+      const amountOfPeopleInput = document.getElementById("amoutofpeople");
+
+      if (foodNameInput) {
+        foodNameInput.value = "";
+      }
+      if (amountOfPeopleInput) {
+        amountOfPeopleInput.value = "";
+      }
+    }} >Add food</Button>
         </DialogFooter>
       </form>
     </DialogContent>
