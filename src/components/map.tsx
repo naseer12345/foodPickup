@@ -190,6 +190,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
   } from "@/components/ui/drawer"
+import { DialogDemo } from './donateFoodDialog';
 
 const Map = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -201,7 +202,7 @@ const Map = () => {
 
 
   const mapContainerStyle = {
-    height: '100vh',
+    height: '95vh',
     width: '100vw',
   };
 
@@ -236,7 +237,9 @@ const Map = () => {
   
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection:'column' , justifyContent: 'center'}}>
+      
+      <DialogDemo />
       <LoadScript
         googleMapsApiKey="AIzaSyBm-UxwUQrC7ProtlcuSVtIN67fXm0NzU0"
         onLoad={handleLoad}
@@ -307,7 +310,7 @@ const Map = () => {
       </Sheet>
 
       
-      
+    
     </div>
   );
 };
