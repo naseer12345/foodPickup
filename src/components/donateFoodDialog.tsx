@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import axios from 'axios';
 
 
@@ -25,7 +25,8 @@ export function DialogToAddFood() {
         feedablePpl
       });
       // Handle response
-      console.log('Response:', response);
+
+      alert("Your food has been added to your current location")
     } catch (error) {
       console.error('Error:', error);
     }
@@ -33,7 +34,7 @@ export function DialogToAddFood() {
   };
 
   return (
-    <Dialog>
+    <Dialog >
     <DialogTrigger asChild>
       <Button variant="outline">Click Me Donate Food</Button>
     </DialogTrigger>
