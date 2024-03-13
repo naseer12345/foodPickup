@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer  } from '@react-google-maps/api';
-import { useState } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+
 const mapStyles = {
     darkMode: [
       {
@@ -164,19 +165,42 @@ const mapStyles = {
       },
     ],
   }
+
   const mapContainerStyle = {
     height: '100vh',
     width: '100vw',
   };
 
 export default function Direction( ){
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate()
+  if(searchParams.size==0){
+    alert("Please go back to homepage, donation then click on pickup food to get the address of the food. thanks")
+    navigate('/')
+  }
+  const lat = Number(searchParams.get('lat'));
+  const lng = Number( searchParams.get('lng'));
+  
 const [directions, setDirections] = useState(null);
-
+const [currentPosition, setCurrentPosition] = useState(null);
+useEffect(() => {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      setCurrentPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    },
+    (error) => {
+      console.error('Error getting current position:', error);
+    }
+  );
+}, [currentPosition]);
 
   const directionsOptions = {
-    destination: {lat: 51.648388, lng: -0.2612529},
-    origin: {lat: 51.6129827, lng: -0.3106275},
-    travelMode: 'TRANSIT', // Specify the travel mode (DRIVING, WALKING, BICYCLING, TRANSIT)
+    destination: {lat:lat,lng:lng},
+    origin: currentPosition,
+    travelMode: 'DRIVING', // Specify the travel mode (DRIVING, WALKING, BICYCLING, TRANSIT)
   };
 
   const onLoadDirections = (directionsResult) => {
@@ -192,9 +216,8 @@ const [directions, setDirections] = useState(null);
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={15}
-            center={51.6129827}
             options={{
-              disableDefaultUI: false,
+              disableDefaultUI: true,
               styles: mapStyles.darkMode,
             }}
           >

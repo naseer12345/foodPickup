@@ -21,7 +21,12 @@ import {
 import { useContext } from 'react';
 
 export default function AcceptFoodSheet(props){
+ 
     const navigateToDirectionPage = useNavigate();
+   
+    const searchParams = new URLSearchParams();
+    searchParams.append('lat', props.obj.donationLocation.lat);
+    searchParams.append('lng', props.obj.donationLocation.lng);
     const [isSheetOpen, setIsSheetOpen] = useContext(SheetContext)
     const toggleSheet = () => {
         setIsSheetOpen(!isSheetOpen); // Toggle sheet visibility
@@ -57,7 +62,7 @@ export default function AcceptFoodSheet(props){
            
           </div>
           <DrawerFooter>
-            <Button onClick={() => navigateToDirectionPage('/direction')} >Pickup the food</Button>
+            <Button onClick={() => navigateToDirectionPage(`/direction?${searchParams.toString()}`)} >Pickup the food</Button>
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>
