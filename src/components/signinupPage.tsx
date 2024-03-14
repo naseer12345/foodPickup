@@ -6,7 +6,7 @@ import {signInWithPopup} from "firebase/auth"
 import { app, auth, provider } from './firebase';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
-
+// laksdjflajf
 // limit the the budget on google maps api 
 export default function SignUpInPage() {
     const navigate = useNavigate();
