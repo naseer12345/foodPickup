@@ -1,0 +1,28 @@
+GET http://localhost:3000/getdonations
+
+
+
+###
+
+GET http://localhost:3000/getdonation/65f308ef9d39773fe7c27e41
+
+
+
+###
+
+POST http://localhost:3000/postdonation
+Content-Type: application/json
+
+{
+  "foodName": "test data 7",
+  "feedsCount": 349994,
+  "donorAddress": {
+    "latitude": 544343,
+    "longitude": -3522
+  }
+}
+
+
+###
+
+DELETE http://localhost:3000/deletedonation/65f308eb9d39773fe7c27e3f
