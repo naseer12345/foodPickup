@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useNavigate } from 'react-router-dom';
 import {signInWithPopup} from "firebase/auth"
-import {auth , provider} from './firebase'
+import { app, auth, provider } from './firebase';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
-
+// limit the the budget on google maps api 
 export default function SignUpInPage() {
     const navigate = useNavigate();
-    // const testSignInStatus = false;
+    const [user, setUser] = useState(null);
 
     const handleclick = () => {
         signInWithPopup(auth, provider)
@@ -21,12 +23,21 @@ export default function SignUpInPage() {
           });
       };
 
+      useEffect(() => {
+        const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                
+                console.log("User is signed in. UID:", user.uid);
+                navigate('/find_donations');
+            } else {
+                console.log("user is not signed in")
+            }
+        });
 
-    // useEffect(() => {
-    //     if (testSignInStatus) {
-    //         navigate('/find_donations');
-    //     }
-    // }, [navigate, testSignInStatus]);
+        return () => unsubscribe();
+    }, [navigate]);
+    // const userUID = user?.uid;
+    // console.log(userUid)
 
     return (
         <div className="w-[100vw] h-[100vh] bg-black flex justify-center items-center">
