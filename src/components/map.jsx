@@ -173,7 +173,7 @@ import { DialogToAddFood } from './donateFoodDialog';
 import AcceptFoodSheet from './acceptFoodSheet';
 import axios from 'axios';
 export const SheetContext = React.createContext()
-export const DonationsContext = React.createContext()
+ const DonationsContext = React.createContext()
 const Map = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPosition, setCurrentPosition] = useState(null);
@@ -226,18 +226,16 @@ const Map = () => {
   const toggleSheet = () => {
     setIsSheetOpen(!isSheetOpen); 
   };
-
  
-// 
 // this code is for deleting data or markers
 
-    const deleteMarker = (clickedData) => {
-      console.log(donations)
-      axios.delete(`http://localhost:3000/deletedonation/${clickedData._id}`)
-      const newData = donations.filter(item => item !== clickedData);
-        setDonations(newData);
-        console.log(donations)
-    };
+    // const deleteMarker = (clickedData) => {
+    //   console.log(donations)
+    //   axios.delete(`http://localhost:3000/deletedonation/${clickedData._id}`)
+    //   const newData = donations.filter(item => item !== clickedData);
+    //     setDonations(newData);
+    //     console.log(donations)
+    // };
   return (
     <div  style={{ display: 'flex', flexDirection:'column' , justifyContent: 'center'}}>
 
@@ -302,6 +300,5 @@ const Map = () => {
     </div>
   );
 };
-
 
 export default Map;

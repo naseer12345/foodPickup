@@ -7,7 +7,6 @@ import { app, auth, provider } from './firebase';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
-// limit the the budget on google maps api 
 export default function SignUpInPage() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -42,9 +41,9 @@ export default function SignUpInPage() {
     return (
         <div className="w-[100vw] h-[100vh] bg-black flex justify-center items-center">
             <div className="flex gap-3 flex-col">
-                <Input type="text" placeholder="Your Name" required />
+                {/* <Input type="text" placeholder="Your Name" required /> */}
                 <Button variant="outline" onClick={()=>handleclick()}>Signup or Signin with Google</Button>
-                <Button variant="outline">Continue without Signup or signin</Button>
+                {/* <Button variant="outline">Continue without Signup or signin</Button> */}
             </div>
         </div>
     );

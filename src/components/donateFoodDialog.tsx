@@ -12,13 +12,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useContext, useState } from "react"
 import axios from 'axios';
-// import {DonationContext } from './map.jsx'
-
 export function DialogToAddFood(props) {
   const [foodName, setFoodName] = useState("");
   const [feedablePpl, setFeedablePple] = useState("");
   const currentLocation = props.currentLocation
-  // const [donations, setDonations] = useContext(DonationContext)
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,10 +28,7 @@ export function DialogToAddFood(props) {
           "longitude": currentLocation.lng
         }
       });
-
-      // setDonations(response)
-      
-
+    
       alert("Your food has been added to your current location")
     } catch (error) {
       console.error('Error:', error);
