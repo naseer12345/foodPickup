@@ -1,4 +1,4 @@
-GET http://localhost:3000/getdonations
+GET https://us-central1-foodpick-291fe.cloudfunctions.net/api/getdonations
 
 
 
