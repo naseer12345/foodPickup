@@ -25,8 +25,8 @@ export default function AcceptFoodSheet(props){
     const navigateToDirectionPage = useNavigate();
    
     const searchParams = new URLSearchParams();
-    searchParams.append('lat', props.obj.donationLocation.lat);
-    searchParams.append('lng', props.obj.donationLocation.lng);
+    searchParams.append('lat', props.obj.donorAddress.latitude);
+    searchParams.append('lng', props.obj.donorAddress.longitude);
     const [isSheetOpen, setIsSheetOpen] = useContext(SheetContext)
     const toggleSheet = () => {
         setIsSheetOpen(!isSheetOpen); // Toggle sheet visibility
@@ -37,9 +37,9 @@ export default function AcceptFoodSheet(props){
         
         <SheetContent>
           <SheetHeader >
-            <SheetTitle>{props.foodName}</SheetTitle>
+            <SheetTitle>{props.obj.foodName}</SheetTitle>
             <SheetDescription>
-              {props.feedablePpl}
+               It can feed upto {props.obj.feedsCount} people.
 
             </SheetDescription>
           </SheetHeader>
@@ -52,8 +52,8 @@ export default function AcceptFoodSheet(props){
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>{props.foodName}</DrawerTitle>
-            <DrawerDescription> potention food address</DrawerDescription>
+            <DrawerTitle>{props.obj.foodName}</DrawerTitle>
+            <DrawerDescription> Donor Food Address lat: {props.obj.donorAddress.latitude}, lng: {props.obj.donorAddress.longitude}</DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
             <div className="flex items-center justify-center space-x-2">

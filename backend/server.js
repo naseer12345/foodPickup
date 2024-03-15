@@ -4,12 +4,13 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Donations = require('./models')
+const Donations = require('./schemas/donationSchema')
 app.use(express.json()); // Middleware to parse JSON request bodies
 app.use(cors());
 app.listen(3000, () => {
     console.log("server is running at port 3000");
 });
+
 
 
 mongoose.connect('mongodb://localhost:27017/foodPick', {
@@ -20,16 +21,12 @@ mongoose.connect('mongodb://localhost:27017/foodPick', {
 
 const db = mongoose.connection
 
-app.post('/donatefood', (req, res) => {
-    console.log(req.body);
-    // Process the request data here
-    res.send('Received your donation');
-});
 
 
 // getting all the donations
 app.get('/getdonations' , async (req , res) =>{
     try{
+     
         const dbdonations = await Donations.find()
         res.json(dbdonations)
     }catch (err) {

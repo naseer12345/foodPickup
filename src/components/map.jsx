@@ -22,6 +22,7 @@ const mapStyles = {
           {
             visibility: 'off',
           },
+          
         ],
       },
       {
@@ -40,6 +41,7 @@ const mapStyles = {
           {
             visibility: 'off',
           },
+          ,
         ],
       },
       {
@@ -161,24 +163,44 @@ const mapStyles = {
       },
     ],
   }
-
+  const mapContainerStyle = {
+    height: '95vh',
+    width: '100vw',
+  };
 import { GoogleMap, LoadScript, MarkerF } from '@react-google-maps/api';
 import  React,{ useState, useEffect } from 'react';
-
-
 import { DialogToAddFood } from './donateFoodDialog';
 import AcceptFoodSheet from './acceptFoodSheet';
+import axios from 'axios';
 export const SheetContext = React.createContext()
+export const DonationsContext = React.createContext()
 const Map = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPosition, setCurrentPosition] = useState(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false); // State variable to control sheet visibility
   const [clickedMarker, setClickedMarker] = useState(null)
+  const [donations, setDonations] = useState([]);
 
-  const mapContainerStyle = {
-    height: '95vh',
-    width: '100vw',
-  };
+  const getDonations = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/getdonations');
+      return response.data
+      } catch (error) {
+      console.error('Error:', error);
+    }};
+  
+  useEffect(() => {
+    const fetchDonations = async () => {
+      try {
+        const data = await getDonations();
+        setDonations(data);
+      } catch (error) {
+        console.error('Error fetching donations:', error);
+      }
+    };
+    
+    fetchDonations();
+  }, []);
 
   const handleLoad = () => {
     setIsLoaded(true);
@@ -201,74 +223,27 @@ const Map = () => {
       }
     );
   }, []);
-
-  const center = {
-    lat: 37.7749,
-    lng: -120,
-  };
-
   const toggleSheet = () => {
-    setIsSheetOpen(!isSheetOpen); // Toggle sheet visibility
+    setIsSheetOpen(!isSheetOpen); 
   };
 
- const arrOfData = [{
-  id:1,
-  foodName: ' burger',
-  feedablePpk: 23,
-  donatorName: 'pattrick',
-  donationLocation: {lat: 51.6487273, lng: -0.2590708}
- }, 
- {
-  id:2,
-
-  foodName: ' sherger',
-  feedablePpk: 23,
-  donatorName: 'freka',
-  donationLocation: {lat: 51.8487273, lng: -0.3590708}
- },
- {
-  id:3,
-
-  foodName: ' targer',
-  feedablePpk: 23,
-  donatorName: 'patrika ',
-  donationLocation: {lat: 51.5487273, lng: -0.5590708}
- },
- {
-  id:4,
-
-  foodName: ' kebob',
-  feedablePpk: 23,
-  donatorName: 'moalika',
-  donationLocation: {lat: 51.3487273, lng: -0.3590708}
- },
- {
-  id:5,
-  foodName: 'past , pesta , posta ',
-  feedablePpk: 23,
-  donatorName: 'fuck you',
-  donationLocation: {lat: 51.1487273, lng: -0.1590708}
- },
-]
-const test = { 
-  id:5,
-  foodName: 'past , pesta , posta ',
-  feedablePpk: 23,
-  donatorName: 'fuck you',
-  donationLocation: {lat: 51.1487273, lng: -0.1590708}
- }
+ 
+// 
 // this code is for deleting data or markers
-// const [data, setData] = useState(arrOfData);
 
-//     const handleMarkerClick = (clickedData) => {
-//         const newData = data.filter(item => item !== clickedData);
-//         setData(newData);
-//         console.log(data)
-//     };
+    const deleteMarker = (clickedData) => {
+      console.log(donations)
+      axios.delete(`http://localhost:3000/deletedonation/${clickedData._id}`)
+      const newData = donations.filter(item => item !== clickedData);
+        setDonations(newData);
+        console.log(donations)
+    };
   return (
-    <div style={{ display: 'flex', flexDirection:'column' , justifyContent: 'center'}}>
+    <div  style={{ display: 'flex', flexDirection:'column' , justifyContent: 'center'}}>
 
-      <DialogToAddFood  />
+      <DonationsContext.Provider value={{ donations , setDonations}} >
+      <DialogToAddFood currentLocation={currentPosition} />
+      </DonationsContext.Provider>
       <LoadScript
         googleMapsApiKey="AIzaSyBm-UxwUQrC7ProtlcuSVtIN67fXm0NzU0"
         onLoad={handleLoad}
@@ -277,28 +252,37 @@ const test = {
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={13}
-            center={currentPosition || center}
+            center={currentPosition}
             options={{
               disableDefaultUI: true,
               styles: mapStyles.darkMode,
+              
             }}
           >
+      <MarkerF
       
-      {
-    arrOfData.map((foodObj) => {
-        return (
-            <MarkerF
-                key={foodObj.id}
-                position={foodObj.donationLocation}
-                onClick={()=>handleMarkerClick(foodObj)} 
-                label={foodObj.foodName}
-            />
-        );
-    })
-}
-
-              
-          
+      position={ currentPosition}
+      
+      label={"Current location"}
+    
+    />
+      {donations.map((foodObj) => {
+  return (
+    <MarkerF
+      key={foodObj._id}
+      position={{ lat: foodObj.donorAddress.latitude, lng: foodObj.donorAddress.longitude }}
+      onClick={() => handleMarkerClick(foodObj)}
+      label={foodObj.foodName}
+      
+      icon={{
+        url: 'https://cdn.icon-icons.com/icons2/3356/PNG/512/symbol_emoj_food_fastfood_burger_hamburger_icon_210591.png',
+  scaledSize: new window.google.maps.Size(32, 32), 
+      }
+        
+      }
+    />
+  );
+})}  
           </GoogleMap>
         ) : (
           <div>Map is loading...</div>
@@ -308,10 +292,9 @@ const test = {
       <SheetContext.Provider value={[isSheetOpen, setIsSheetOpen]}>
       {/* acceptfoodsheet component will not run as long as as clickedmarker is null */}
             {clickedMarker && (
-                <AcceptFoodSheet  
-                    foodName={clickedMarker.foodName} 
-                    feedablePpl={clickedMarker.feedablePpk} 
+                <AcceptFoodSheet 
                     obj={clickedMarker}
+
                 />
             )}
         </SheetContext.Provider>

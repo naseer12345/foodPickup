@@ -10,21 +10,30 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import axios from 'axios';
+// import {DonationContext } from './map.jsx'
 
-
-export function DialogToAddFood() {
+export function DialogToAddFood(props) {
   const [foodName, setFoodName] = useState("");
   const [feedablePpl, setFeedablePple] = useState("");
+  const currentLocation = props.currentLocation
+  // const [donations, setDonations] = useContext(DonationContext)
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/donatefood', {
-        foodName,
-        feedablePpl
+      const response = await axios.post('http://localhost:3000/postdonation', {
+        "foodName": `${foodName}`,
+        "feedsCount": `${feedablePpl}`,
+        "donorAddress": {
+          "latitude": currentLocation.lat,
+          "longitude": currentLocation.lng
+        }
       });
-      // Handle response
+
+      // setDonations(response)
+      
 
       alert("Your food has been added to your current location")
     } catch (error) {

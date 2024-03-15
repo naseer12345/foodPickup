@@ -14,7 +14,7 @@ POST http://localhost:3000/postdonation
 Content-Type: application/json
 
 {
-  "foodName": "test data 7",
+  "foodName": "new data",
   "feedsCount": 349994,
   "donorAddress": {
     "latitude": 544343,
@@ -25,4 +25,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/deletedonation/65f308eb9d39773fe7c27e3f
+DELETE http://localhost:3000/deletedonation/65f35f6d538ff523ccfd2f79
