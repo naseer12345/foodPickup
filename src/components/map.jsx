@@ -183,7 +183,7 @@ const Map = () => {
 
   const getDonations = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/getdonations');
+      const response = await axios.get('https://us-central1-foodpick-291fe.cloudfunctions.net/api/getdonations');
       return response.data
       } catch (error) {
       console.error('Error:', error);

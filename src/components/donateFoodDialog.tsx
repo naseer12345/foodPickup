@@ -20,7 +20,7 @@ export function DialogToAddFood(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/postdonation', {
+      const response = await axios.post('https://us-central1-foodpick-291fe.cloudfunctions.net/api/postdonation', {
         "foodName": `${foodName}`,
         "feedsCount": `${feedablePpl}`,
         "donorAddress": {

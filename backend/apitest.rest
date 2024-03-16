@@ -10,15 +10,15 @@ GET http://localhost:3000/getdonation/65f308ef9d39773fe7c27e41
 
 ###
 
-POST http://localhost:3000/postdonation
+POST https://us-central1-foodpick-291fe.cloudfunctions.net/api/postdonation
 Content-Type: application/json
 
 {
-  "foodName": "new data",
-  "feedsCount": 349994,
+  "foodName": "pasta",
+  "feedsCount": 2,
   "donorAddress": {
-    "latitude": 544343,
-    "longitude": -3522
+    "latitude": 45.64811801941689,
+    "longitude": -0.2095857858718817
   }
 }
 

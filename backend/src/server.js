@@ -1,27 +1,26 @@
-
 // put this mongodb server url and API key in dotenv before deployment
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
 const cors = require('cors');
-const Donations = require('./schemas/donationSchema')
-const functions = require("firebase-functions")
+const mongoose = require('mongoose');
 app.use(express.json()); 
 app.use(cors());
-app.listen(3000, () => {
-    console.log("server is running at port 3000");
-});
 
-
-
-mongoose.connect('mongodb+srv://imaginaryworld15:GlfKlZvQ9NLI39EJ@cluster0.txcnlvz.mongodb.net/', {
-  useNewUrlParser: true,
-})
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.log(err));
+(async () => {
+  try {
+      await mongoose.connect('mongodb+srv://imaginaryworld15:GlfKlZvQ9NLI39EJ@cluster0.txcnlvz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+          useNewUrlParser: true,
+      });
+      console.log('MongoDB Connected');
+  } catch (err) {
+      console.error('MongoDB Connection Error:', err.message);
+  }
+})();;
 
 const db = mongoose.connection
 
+const Donations = require('./schemas/donationSchema')
+const functions = require("firebase-functions")
 
 
 // getting all the donations
@@ -87,4 +86,4 @@ async function getDonor(req, res, next) {
     next();
   }
 
-  exports.api = functions.https.onRequest(app)
+exports.api = functions.https.onRequest(app);
