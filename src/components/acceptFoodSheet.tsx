@@ -27,11 +27,13 @@ export default function AcceptFoodSheet(props){
     const searchParams = new URLSearchParams();
     searchParams.append('lat', props.obj.donorAddress.latitude);
     searchParams.append('lng', props.obj.donorAddress.longitude);
+    // @ts-ignore
     const [isSheetOpen, setIsSheetOpen] = useContext(SheetContext)
     const toggleSheet = () => {
         setIsSheetOpen(!isSheetOpen); // Toggle sheet visibility
       };
-    const clickedMarerObj =  props.obj
+
+    
    return( 
    <Sheet open={isSheetOpen} >
         

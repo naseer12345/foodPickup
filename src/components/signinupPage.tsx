@@ -1,18 +1,23 @@
+// @ts-ignore
 import React, { useEffect , useState } from "react";
 import { Button } from "./ui/button";
+// @ts-ignore
 import { Input } from "./ui/input";
 import { useNavigate } from 'react-router-dom';
 import {signInWithPopup} from "firebase/auth"
+// @ts-ignore
 import { app, auth, provider } from './firebase';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
 export default function SignUpInPage() {
     const navigate = useNavigate();
+    // @ts-ignore
     const [user, setUser] = useState(null);
 
     const handleclick = () => {
         signInWithPopup(auth, provider)
+        // @ts-ignore
           .then((data) => {
             // signed up so navigate to ... 
             navigate('/find_donations');

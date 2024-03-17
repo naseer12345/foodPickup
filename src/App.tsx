@@ -1,6 +1,4 @@
-import React from 'react';
 import Map from './components/map';
-
 import Direction from './components/direction';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Notice the change here
 import SignUpInPage from './components/signinupPage';

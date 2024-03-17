@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useContext, useState } from "react"
+import {  useState } from "react"
 import axios from 'axios';
 export function DialogToAddFood(props) {
   const [foodName, setFoodName] = useState("");
@@ -20,6 +20,7 @@ export function DialogToAddFood(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      // @ts-ignore
       const response = await axios.post('https://us-central1-foodpick-291fe.cloudfunctions.net/api/postdonation', {
         "foodName": `${foodName}`,
         "feedsCount": `${feedablePpl}`,
@@ -69,9 +70,11 @@ export function DialogToAddFood(props) {
       const amountOfPeopleInput = document.getElementById("amoutofpeople");
 
       if (foodNameInput) {
+        // @ts-ignore
         foodNameInput.value = "";
       }
       if (amountOfPeopleInput) {
+        // @ts-ignore
         amountOfPeopleInput.value = "";
       }
     }} >Add food</Button>
